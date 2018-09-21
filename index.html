@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cat button</title>
+</head>
+
+<body>
+    <!-- first make the button -->
+    <!-- not styled button below -->
+    <!-- <button id="cat-button">magical cat button</button> -->
+    <button type="button" id = "cat-button" class="btn btn-info">magical cat button</button>
+    <!-- create an empty div to dump the images into -->
+    <div id="images"></div>
+
+    <!-- Grab bootstrap to style the button -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <!-- Grab jquery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+
+        //Create the on click function (when you click cat-button)
+        $("#cat-button").on("click", function () {
+
+            //Grab the giphy URL to generate the cat gifs
+            //notice how the giphy URL says tag=cats at the end of it..
+            //this means it will only be catered to finding cat
+            var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=cats";
+
+            //console log the queryURL to find the appropatiate dom nodes to display!!
+            console.log(queryURL);
+
+
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function (response) {
+                //after ajax is called..
+                
+                //spider web into the dom node we are aiming for -
+                //.. the original url for the gif
+                var imageUrl = response.data.image_original_url;
+
+                //create a var to store the cat image
+                var catImage = $("<img>");
+
+                //attach the img url to the img
+                catImage.attr("src", imageUrl);
+                //create an ult
+                catImage.attr("alt", "cat-image-goes-here");
+
+                //Prepend the catImage which now contains the URL..
+                //.. source of the gif to the images div we made in the html
+                $("#images").prepend(catImage);
+
+
+            });
+
+        });
+
+    </script>
+</body>
+
+</html>
